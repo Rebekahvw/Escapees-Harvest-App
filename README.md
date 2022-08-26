@@ -10,6 +10,6 @@ Group members:
 
 ## Continuous Integration
 
-[![Harvest](https://circleci.com/gh/Rebekahvw/Escapees-Harvest-App/tree/main.svg?style=style=shield&circle-token=bcc0c991b58c4207ef061a9a5ee69ce3fdfa36bb)](https://app.circleci.com/pipelines/github/Rebekahvw/Escapees-Harvest-App)
+[![Harvest](https://circleci.com/gh/Rebekahvw/Escapees-Harvest-App/tree/main.svg?style=style=shield&circle)](https://app.circleci.com/pipelines/github/Rebekahvw/Escapees-Harvest-App)
 
 
