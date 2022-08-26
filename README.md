@@ -7,3 +7,7 @@ Group members:
 * Atiyya Hoosain
 * Rebekah van Wyk
 * Zagesh Parshotam
+
+## Continuous Integration
+
+[![Harvest](https://circleci.com/gh/Rebekahvw/Escapees-Harvest-App/tree/main.svg?style=svg)](https://app.circleci.com/pipelines/github/Rebekahvw/Escapees-Harvest-App)
