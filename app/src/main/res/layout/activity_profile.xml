@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ProfileActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/greeting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="24dp"
+        android:layout_weight="1"
+        android:textAlignment="center"
+        android:textSize="25sp"/>
+
+    <TextView
+        android:id="@+id/logHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="24dp"
+        android:layout_weight="1"
+        android:textAlignment="center"
+        android:text="YOUR LOGS"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="#434a53"
+/>
+
+    <TextView
+        android:id="@+id/logStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="24dp"
+        android:layout_weight="1"
+        android:textAlignment="center"
+        android:text="You do not have any logs. Click add new log to add one!"
+        android:textSize="24sp"
+        android:textColor="#a29990"
+        />
+
+    <Button
+        android:id="@+id/addLog"
+        android:text="Add new log"
+        android:backgroundTint="#c36c04"
+        android:layout_width="380dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_weight="1"
+        />
+    <Button
+        android:id="@+id/logOut"
+        android:text="Log out"
+        android:backgroundTint="#daab65"
+        android:layout_width="380dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_weight="1"
+        />
+</LinearLayout>
