@@ -44,6 +44,7 @@
         android:textColor="#a29990"
         />
 
+
     <Button
         android:id="@+id/addLog"
         android:text="Add new log"
