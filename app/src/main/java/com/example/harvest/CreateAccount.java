@@ -110,33 +110,6 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-//        mAuth.createUserWithEmailAndPassword(email,password)
-//                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if(task.isSuccessful()){
-//                            User user = new User(fullName, username, email);
-//
-//                            // Write a message to the database
-//                            //created a user and a document in the users collection
-//                            FirebaseDatabase.getInstance().getReference("Users")
-//                                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-//                                            .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                @Override
-//                                public void onComplete(@NonNull Task<Void> task) {
-//                                    if (task.isSuccessful()){
-//                                        Toast.makeText(CreateAccount.this, "Account has been created successfully",Toast.LENGTH_LONG).show();
-//                                    }
-//                                    else{
-//                                        Toast.makeText(CreateAccount.this,"Account creation failed",Toast.LENGTH_LONG).show();
-//                                    }
-//                                }
-//                            });
-//                        }else{
-//                            Toast.makeText(CreateAccount.this,"Account creation failed",Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//                });
 
         mAuth.createUserWithEmailAndPassword(email , password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
@@ -154,8 +127,8 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                               //  Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                Toast.makeText(CreateAccount.this, "Account created successfully", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(CreateAccount.this , ProfileActivity.class);
+                                Toast.makeText(CreateAccount.this, "Account created successfully. Please log in", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(CreateAccount.this , MainActivity.class);
                                 startActivity(intent);
 
                             }
@@ -168,19 +141,6 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
                             }
                         });
 
-                //adding it to realtime database
-//                mRootRef.child("Users").child(mAuth.getCurrentUser().getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        if (task.isSuccessful()){
-//                            Toast.makeText(CreateAccount.this, "Account has been created successfully",Toast.LENGTH_LONG).show();
-//                            Intent intent = new Intent(CreateAccount.this , ProfileActivity.class);
-//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                            startActivity(intent);
-//                            finish();
-//                        }
-//                    }
-//                });
 
             }
         }).addOnFailureListener(new OnFailureListener() {

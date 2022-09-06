@@ -27,22 +27,32 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
+
+
 public class CreateLogEntry extends AppCompatActivity {
 
     private EditText produceET;
     private EditText weightET;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private Button addLog;
+    private Button addLogEntry;
     private Button returnHome;
-
+    private Button seeEntries;
     private CollectionReference usersRef = db.collection("users");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_log_entry);
+        Intent j = getIntent();
+        String logID = j.getStringExtra("logID");
 
-        produceET = (EditText) findViewById(R.id.produceEditText);
-        weightET = (EditText) findViewById(R.id.weightEditText);
+        produceET = (EditText) findViewById(R.id.produceET);
+        weightET = (EditText) findViewById(R.id.weightET);
+
+        seeEntries=(Button)findViewById(R.id.goToLogEntries);
+        seeEntries.setOnClickListener(view -> {
+            Intent intent = new Intent(CreateLogEntry.this , LogEntryHome.class);
+            startActivity(intent);
+        });
 
         returnHome = (Button)findViewById(R.id.returnHome);
         returnHome.setOnClickListener(view -> {
@@ -50,24 +60,25 @@ public class CreateLogEntry extends AppCompatActivity {
             startActivity(intent);
         });
 
-        addLog = (Button) findViewById(R.id.addLog);
-        addLog.setOnClickListener(view -> {
-            createLogEntry();
+        addLogEntry = (Button) findViewById(R.id.addLogEntry);
+        addLogEntry.setOnClickListener(view -> {
+            createLogEntry(logID);
         });
     }
-    void createLogEntry(){
-        String produceType = produceET.getText().toString().trim();
-        String weightString=weightET.getText().toString().trim();
-        float weight = Float.valueOf(weightString);
 
-        if (produceType.isEmpty()){
-            produceET.setError("Enter produce type to proceed");
+    void createLogEntry(String logID){
+        String produce = produceET.getText().toString().trim();
+        String weight = weightET.getText().toString().trim();
+
+        if (produce.isEmpty()){
+            produceET.setError("Enter produce type");
             produceET.requestFocus();
             return;
         }
-        if (weightString.isEmpty()){
-            produceET.setError("Enter weight of produce to proceed");
-            produceET.requestFocus();
+
+        if (weight.isEmpty()){
+            weightET.setError("Enter produce weight");
+            weightET.requestFocus();
             return;
         }
 
@@ -75,25 +86,27 @@ public class CreateLogEntry extends AppCompatActivity {
         Date date = new Date();
         String timeCreated = formatter.format(date);
 
-        String logID=usersRef.document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Logs").getId();
+       // OurLog logs = new OurLog(FirebaseAuth.getInstance().getCurrentUser().getUid(),logName.getText().toString().trim(),timeCreated);
 
-        LogEntry entry = new LogEntry(FirebaseAuth.getInstance().getCurrentUser().getUid(),produceType,weight,timeCreated);
-
-        usersRef.document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Logs").document(logID).collection("Log entries").add(entry)
+        LogEntry entry = new LogEntry(FirebaseAuth.getInstance().getCurrentUser().getUid(),produce,weight,timeCreated);
+        String ID = (usersRef.document(FirebaseAuth.getInstance().getCurrentUser().getUid())).getId();
+        usersRef.document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Logs").document(ID).collection("Log Entries").add(entry)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         //  Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                         Toast.makeText(CreateLogEntry.this, "Log entry added successfully", Toast.LENGTH_LONG).show();
                         produceET.getText().clear();
+                        weightET.getText().clear();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(CreateLogEntry.this, "Log creation failed", Toast.LENGTH_LONG).show();
+                        Toast.makeText(CreateLogEntry.this, "Log entry creation failed", Toast.LENGTH_LONG).show();
                     }
                 });
 
     }
+
 }

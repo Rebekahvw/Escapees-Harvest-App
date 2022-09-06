@@ -104,12 +104,16 @@ public class ProfileActivity extends AppCompatActivity {
                             String nameOfLog = log.getLogName();
                             String timeCreated=log.getTimeCreated();
                             TextView logTV = new TextView(ProfileActivity.this);
-                            logInfo+=nameOfLog+"\n"+"Created: "+timeCreated+"\n\n";
+                            logInfo+=nameOfLog+"\n"+"Created: "+timeCreated;
                             logTV.setText(logInfo);
+                            logTV.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                            logTV.setPadding(0,25,0,0);
+                            logTV.setTextSize(20);
                             logLayout.addView(logTV);
                             logTV.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
+
                                     Intent i = new Intent(ProfileActivity.this, LogEntryHome.class);
                                     i.putExtra("logID",docID);
                                     startActivity(i);

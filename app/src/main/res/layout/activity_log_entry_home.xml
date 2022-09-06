@@ -3,21 +3,73 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".LogEntryHome"
     android:orientation="vertical"
-    tools:context=".LogEntryHome">
+    android:id="@+id/pageLayout"
+    >
 
-
+    <!--    <TextView-->
+    <!--        android:id="@+id/greeting"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="40dp"-->
+    <!--        android:layout_marginBottom="24dp"-->
+    <!--        android:layout_weight="1"-->
+    <!--        android:textAlignment="center"-->
+    <!--        android:textSize="25sp"/>-->
 
     <TextView
-        android:id="@+id/entryDisplay"
+        android:id="@+id/logHeading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="24dp"
         android:layout_weight="1"
         android:textAlignment="center"
-        android:textSize="24sp"
-        android:textColor="#a29990"
+        android:text="YOUR LOG ENTRIES"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="#434a53"
+        />
+
+        <TextView
+            android:id="@+id/logDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textColor="#a29990"
+            />
+
+
+    <Button
+        android:id="@+id/addLogEntry"
+        android:text="Add new log entry"
+        android:backgroundTint="#c36c04"
+        android:layout_width="380dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_weight="1"
+        />
+    <Button
+        android:id="@+id/returnHome"
+        android:text="RETURN HOME"
+        android:backgroundTint="#daab65"
+        android:layout_width="380dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_weight="1"
         />
 </LinearLayout>

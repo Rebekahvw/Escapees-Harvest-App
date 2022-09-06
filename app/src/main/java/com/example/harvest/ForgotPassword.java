@@ -3,6 +3,7 @@ package com.example.harvest;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -19,7 +20,7 @@ public class ForgotPassword extends AppCompatActivity {
 
     private EditText emailEditText;
     private Button resetPasswordButton;
-
+    private Button returnHome;
     FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,11 @@ public class ForgotPassword extends AppCompatActivity {
                 resetPassword();
             }
         });
-
+        returnHome = (Button)findViewById(R.id.returnHome);
+        returnHome.setOnClickListener(view -> {
+            Intent intent = new Intent(ForgotPassword.this , ProfileActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void resetPassword() {

@@ -10,13 +10,13 @@ public class LogEntry {
     private String userID;
     private String timeCreated;
     private String produceType;
-    private float weight;
+    private String weight;
 
     public LogEntry(){
         //firestore always needs a public empty constructor
     }
 
-    public LogEntry(String userID, String produceType, float weight, String timeCreated){
+    public LogEntry(String userID, String produceType, String weight, String timeCreated){
 
         this.userID = userID;
         this.produceType = produceType;
@@ -48,7 +48,7 @@ public class LogEntry {
         return produceType;
     }
 
-    public float getWeight() {
+    public String getWeight() {
         return weight;
     }
 }
