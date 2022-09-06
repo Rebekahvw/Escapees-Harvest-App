@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,15 +34,13 @@ import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private static final String TAG = "ProfileActivity";
-
     private Button logOut;
     private Button addLog;
     private TextView logDisplayTextView;
     //Create private variables for firebase user and for database reference, so that we reference which "table" we are modifying
     private FirebaseUser user;
     private DatabaseReference reference;
-
+    private LinearLayout logLayout;
     private String userID; //used in database; makes sure we select the right user
 
     //Attempts to fetch and display logs using firestore
@@ -56,48 +55,32 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        logOut=(Button)findViewById(R.id.logOut);
+        logOut = (Button) findViewById(R.id.logOut);
 
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(ProfileActivity.this,MainActivity.class));
+                startActivity(new Intent(ProfileActivity.this, MainActivity.class));
             }
         });
-        addLog = (Button)findViewById(R.id.addLog);
+        addLog = (Button) findViewById(R.id.addLog);
         addLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ProfileActivity.this,CreateLog.class));
+                startActivity(new Intent(ProfileActivity.this, CreateLog.class));
             }
         });
+        LinearLayout pageLayout = (LinearLayout) findViewById(R.id.pageLayout);
+        //logDisplayTextView = (TextView) findViewById(R.id.logDisplay); //textView to list logs
 
-        logDisplayTextView=(TextView) findViewById(R.id.logDisplay); //textView to list logs
+        //adding a linear layout dynamically so we can add textviews to it
+        logLayout=new LinearLayout(this);
+        logLayout.setOrientation(LinearLayout.VERTICAL);
+        pageLayout.addView(logLayout);
+
+
         loadLogs();
-//        user = FirebaseAuth.getInstance().getCurrentUser();
-//        reference = FirebaseDatabase.getInstance().getReference("Users");
-//        userID = user.getUid();
-//
-//        final TextView greetingTextView = (TextView)findViewById(R.id.greeting);
-//
-//        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                User userProfile = snapshot.getValue(User.class);
-//
-//                if(userProfile!=null){
-//                    String fullName = userProfile.fullname;
-//
-//                    greetingTextView.setText("Welcome, "+fullName+"!");
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(ProfileActivity.this,"Something went wrong!", Toast.LENGTH_LONG).show();
-//            }
-//        });
     }
 
     //for now, filter latest on top. but later, use the below line of code with it's ascending counterpart
@@ -109,8 +92,9 @@ public class ProfileActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        String logInfo="";
+
                         for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
+                            String logInfo="";
                             //QuerySnapshot is our whole collection, which has multiple document snapshots
                             //each document snapshot represents a log
                             OurLog log = documentSnapshot.toObject(OurLog.class);
@@ -119,11 +103,21 @@ public class ProfileActivity extends AppCompatActivity {
                             String docID = log.getDocumentID();
                             String nameOfLog = log.getLogName();
                             String timeCreated=log.getTimeCreated();
-
+                            TextView logTV = new TextView(ProfileActivity.this);
                             logInfo+=nameOfLog+"\n"+"Created: "+timeCreated+"\n\n";
+                            logTV.setText(logInfo);
+                            logLayout.addView(logTV);
+                            logTV.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent i = new Intent(ProfileActivity.this, LogEntryHome.class);
+                                    i.putExtra("logID",docID);
+                                    startActivity(i);
+                                }
+                            });
 
                         }
-                        logDisplayTextView.setText(logInfo);
+                    //    logDisplayTextView.setText(logInfo);
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {

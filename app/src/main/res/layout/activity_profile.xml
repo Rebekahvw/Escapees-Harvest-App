@@ -5,17 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".ProfileActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/pageLayout"
+    >
 
-    <TextView
-        android:id="@+id/greeting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="24dp"
-        android:layout_weight="1"
-        android:textAlignment="center"
-        android:textSize="25sp"/>
+<!--    <TextView-->
+<!--        android:id="@+id/greeting"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        android:layout_marginBottom="24dp"-->
+<!--        android:layout_weight="1"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textSize="25sp"/>-->
 
     <TextView
         android:id="@+id/logHeading"
@@ -31,17 +33,17 @@
         android:textColor="#434a53"
 />
 
-    <TextView
-        android:id="@+id/logDisplay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="24dp"
-        android:layout_weight="1"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textColor="#a29990"
-        />
+<!--    <TextView-->
+<!--        android:id="@+id/logDisplay"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        android:layout_marginBottom="24dp"-->
+<!--        android:layout_weight="1"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textSize="24sp"-->
+<!--        android:textColor="#a29990"-->
+<!--        />-->
 
 
     <Button
