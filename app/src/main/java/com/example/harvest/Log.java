@@ -9,11 +9,12 @@ import java.time.format.DateTimeFormatter;
 public class Log {
 
     private String userID;
-    private String createTime;
+    private String timeCreated;
     private String logName;
 
-    public Log(){
 
+    public Log(){
+        //firestore always needs a public empty constructor
     }
 
     public Log(String userID, String logName){
@@ -21,7 +22,14 @@ public class Log {
         this.userID = userID;
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
-        this.createTime = formatter.format(date);
+        this.timeCreated = formatter.format(date);
         this.logName = logName;
+    }
+
+    public String getLogName(){
+        return logName;
+    }
+    public String getTimeCreated(){
+        return timeCreated;
     }
 }

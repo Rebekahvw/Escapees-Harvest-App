@@ -23,6 +23,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -60,10 +62,10 @@ public class CreateLog extends AppCompatActivity {
     }
 
     void createLog(){
+        String logNamed = logName.getText().toString().trim();
 
-
-        if (logName.getText().toString().trim().isEmpty()){
-            logName.setError("Full name is a required field");
+        if (logNamed.isEmpty()){
+            logName.setError("Enter log name to proceed ");
             logName.requestFocus();
             return;
         }
@@ -84,9 +86,16 @@ public class CreateLog extends AppCompatActivity {
 //        });
 
         //define type for the Key (String) and value that we want to pass (object because we can pass different types)
-        HashMap<String , Object> logs = new HashMap<>();//use hashmap which is a specific implementation of the map interface
+//        HashMap<String , Object> logs = new HashMap<>();//use hashmap which is a specific implementation of the map interface
+//        logs.put("logName" , logName.getText().toString().trim());
 
-        logs.put("logName" , logName.getText().toString().trim());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        String timeCreated = formatter.format(date);
+
+        OurLog logs = new OurLog(FirebaseAuth.getInstance().getCurrentUser().getUid(),logName.getText().toString().trim(),timeCreated);
+
+
 //        db.collection("userLogs").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(logs, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
 //            @Override
 //            public void onComplete(@NonNull Task<Void> task) {
@@ -102,6 +111,8 @@ public class CreateLog extends AppCompatActivity {
 //                }
 //            }
 //        });
+
+        //correct, but just checking something
        usersRef.document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Logs").add(logs)
                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                    @Override
