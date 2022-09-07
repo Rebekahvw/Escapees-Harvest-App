@@ -34,25 +34,23 @@ import java.util.Map;
 
 public class LogEntryHome extends AppCompatActivity {
 
+    //UI elements
     private Button returnHome;
     private Button addEntry;
     private TextView logDisplayTextView;
-    private String logID;
-    //Create private variables for firebase user and for database reference, so that we reference which "table" we are modifying
-    private LinearLayout entryLayout;
-    //Attempts to fetch and display logs using firestore
+
+    //firestore database, documents, and collections
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference usersRef = db.collection("users");//what we wanna add nodes to
     private DocumentReference logRef = db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
     private CollectionReference allLogsRef = db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Logs");
-  // private CollectionReference allEntriesRef = db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Logs").document(logID).collection("Log Entries");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_entry_home);
-       // Intent j = getIntent();
-       // String logID = j.getStringExtra("logID");
+
         String logID = (usersRef.document(FirebaseAuth.getInstance().getCurrentUser().getUid())).getId();
         returnHome = (Button) findViewById(R.id.returnHome);
 
@@ -62,6 +60,7 @@ public class LogEntryHome extends AppCompatActivity {
                 startActivity(new Intent(LogEntryHome.this, ProfileActivity.class));
             }
         });
+
         addEntry = (Button) findViewById(R.id.addLogEntry);
         addEntry.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,20 +68,14 @@ public class LogEntryHome extends AppCompatActivity {
                 startActivity(new Intent(LogEntryHome.this, CreateLogEntry.class));
             }
         });
-      //  LinearLayout pageLayout = (LinearLayout) findViewById(R.id.pageLayout);
-        logDisplayTextView = (TextView) findViewById(R.id.logDisplay); //textView to list logs
 
-        //adding a linear layout dynamically so we can add textviews to it
-     //   entryLayout=new LinearLayout(this);
-     //   entryLayout.setOrientation(LinearLayout.VERTICAL);
-     //   pageLayout.addView(entryLayout);
+        logDisplayTextView = (TextView) findViewById(R.id.logDisplay); //textView to list logs
 
         loadLogEntries(logID);
     }
 
-    //for now, filter latest on top. but later, use the below line of code with it's ascending counterpart
-    //in a switch so that the user can choose how to order the results
-    // Query.Direction order = Query.Direction.DESCENDING;
+    //fetch and display log entries, filter latest on top
+
     public void loadLogEntries(String logID){
         allLogsRef.document(logID).collection("Log Entries").orderBy("timeCreated", Query.Direction.DESCENDING)
                 .get()
@@ -93,10 +86,10 @@ public class LogEntryHome extends AppCompatActivity {
                         for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
 
                             //QuerySnapshot is our whole collection, which has multiple document snapshots
-                            //each document snapshot represents a log
+                            //each document snapshot represents a log entry
                             LogEntry log = documentSnapshot.toObject(LogEntry.class);
 
-                            //getting the ID of the actual document (so actual log) so we can use it later
+                            //getting the ID of the actual document
                             String docID = log.getDocumentID();
                             String produceType = log.getProduceType();
                             String weight = log.getWeight();
@@ -111,7 +104,6 @@ public class LogEntryHome extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(LogEntryHome.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                        // Log.
                     }
                 });
     }

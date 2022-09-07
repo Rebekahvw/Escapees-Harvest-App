@@ -103,6 +103,8 @@ public class ProfileActivity extends AppCompatActivity {
                             String docID = log.getDocumentID();
                             String nameOfLog = log.getLogName();
                             String timeCreated=log.getTimeCreated();
+
+                            //dynamically create a textview for each log and add an onclicklistener
                             TextView logTV = new TextView(ProfileActivity.this);
                             logInfo+=nameOfLog+"\n"+"Created: "+timeCreated;
                             logTV.setText(logInfo);
@@ -112,8 +114,7 @@ public class ProfileActivity extends AppCompatActivity {
                             logLayout.addView(logTV);
                             logTV.setOnClickListener(new View.OnClickListener() {
                                 @Override
-                                public void onClick(View view) {
-
+                                public void onClick(View view) {//takes them to log entries of that specific log
                                     Intent i = new Intent(ProfileActivity.this, LogEntryHome.class);
                                     i.putExtra("logID",docID);
                                     startActivity(i);
@@ -121,14 +122,14 @@ public class ProfileActivity extends AppCompatActivity {
                             });
 
                         }
-                    //    logDisplayTextView.setText(logInfo);
+
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(ProfileActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                       // Log.
+
                     }
                 });
     }

@@ -49,6 +49,7 @@ public class ForgotPassword extends AppCompatActivity {
     private void resetPassword() {
         String email = emailEditText.getText().toString().trim();
 
+        //check that fields aren't empty
         if(email.isEmpty()){
             emailEditText.setError("Email required");
             emailEditText.requestFocus();
@@ -59,6 +60,8 @@ public class ForgotPassword extends AppCompatActivity {
             emailEditText.requestFocus();
             return;
         }
+
+        //use firebase authentication to send a password reset email
         auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

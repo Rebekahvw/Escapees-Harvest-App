@@ -42,24 +42,29 @@ public class CreateLogEntry extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_log_entry);
+
         Intent j = getIntent();
         String logID = j.getStringExtra("logID");
 
+        //initialise UI elements and set their onclicklisteners
         produceET = (EditText) findViewById(R.id.produceET);
         weightET = (EditText) findViewById(R.id.weightET);
 
+        //go to activity that displays log entries
         seeEntries=(Button)findViewById(R.id.goToLogEntries);
         seeEntries.setOnClickListener(view -> {
             Intent intent = new Intent(CreateLogEntry.this , LogEntryHome.class);
             startActivity(intent);
         });
 
+        //go to profile
         returnHome = (Button)findViewById(R.id.returnHome);
         returnHome.setOnClickListener(view -> {
             Intent intent = new Intent(CreateLogEntry.this , ProfileActivity.class);
             startActivity(intent);
         });
 
+        //add info to firestore
         addLogEntry = (Button) findViewById(R.id.addLogEntry);
         addLogEntry.setOnClickListener(view -> {
             createLogEntry(logID);
@@ -70,6 +75,7 @@ public class CreateLogEntry extends AppCompatActivity {
         String produce = produceET.getText().toString().trim();
         String weight = weightET.getText().toString().trim();
 
+        //make sure fields arent empty
         if (produce.isEmpty()){
             produceET.setError("Enter produce type");
             produceET.requestFocus();
@@ -86,10 +92,11 @@ public class CreateLogEntry extends AppCompatActivity {
         Date date = new Date();
         String timeCreated = formatter.format(date);
 
-       // OurLog logs = new OurLog(FirebaseAuth.getInstance().getCurrentUser().getUid(),logName.getText().toString().trim(),timeCreated);
 
         LogEntry entry = new LogEntry(FirebaseAuth.getInstance().getCurrentUser().getUid(),produce,weight,timeCreated);
         String ID = (usersRef.document(FirebaseAuth.getInstance().getCurrentUser().getUid())).getId();
+
+        //create log entry in firestore
         usersRef.document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Logs").document(ID).collection("Log Entries").add(entry)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override

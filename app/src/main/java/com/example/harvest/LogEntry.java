@@ -23,11 +23,13 @@ public class LogEntry {
         this.weight=weight;
         this.timeCreated = timeCreated;
     }
+
     @Exclude //prevents the document ID from being stored as a field in the log
     public String getDocumentID() {
         return documentID;
     }
 
+    //getters and setters
     public void setDocumentID(String documentID) {
         this.documentID = documentID;
     }

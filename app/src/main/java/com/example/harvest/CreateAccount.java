@@ -28,37 +28,37 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CreateAccount extends AppCompatActivity implements View.OnClickListener {
+
     private static final String TAG = CreateAccount.class.getSimpleName();
 
-    private TextView banner, registerUser;
+    //UI elements
+    private TextView registerUser;
     private EditText editTextFullName, editTextUsername, editTextEmail, editTextPassword;
+
+    //firebase and firestore variables
     private FirebaseAuth mAuth;
     private DatabaseReference mRootRef;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-// ...
-// Initialize Firebase Auth
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        // Check if user is signed in (non-null) and update UI accordingly.
-//
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+
+        //initialise firestore variables
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
         mRootRef = FirebaseDatabase.getInstance().getReference();
-        registerUser = (TextView) findViewById(R.id.createAccount);
-        registerUser.setOnClickListener(this);
+
+        //initialise UI elements
 
         editTextEmail = (EditText) findViewById(R.id.email);
         editTextFullName= (EditText) findViewById(R.id.fullname);
         editTextPassword = (EditText) findViewById(R.id.password);
         editTextUsername = (EditText) findViewById(R.id.username);
+
+        registerUser = (TextView) findViewById(R.id.createAccount);
+        registerUser.setOnClickListener(this);
 
     }
 
@@ -76,6 +76,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         String fullName = editTextFullName.getText().toString().trim();
         String username = editTextUsername.getText().toString().trim();
 
+        //make sure fields aren't empty
         if (fullName.isEmpty()){
             editTextFullName.setError("Full name is a required field");
             editTextFullName.requestFocus();
@@ -110,6 +111,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
             return;
         }
 
+        //use firebase authentication to make a new user with email and password in database
 
         mAuth.createUserWithEmailAndPassword(email , password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override

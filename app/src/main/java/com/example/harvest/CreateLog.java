@@ -58,23 +58,26 @@ public class CreateLog extends AppCompatActivity {
     void createLog(){
         String logNamed = logName.getText().toString().trim();
 
+        //field not empty check
         if (logNamed.isEmpty()){
             logName.setError("Enter log name to proceed ");
             logName.requestFocus();
             return;
         }
 
+        //fetching date to sort by time created later
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         String timeCreated = formatter.format(date);
 
+        //create log instance
         OurLog logs = new OurLog(FirebaseAuth.getInstance().getCurrentUser().getUid(),logName.getText().toString().trim(),timeCreated);
 
+        //add log to firestore, connected to this specific user.
        usersRef.document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Logs").add(logs)
                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                    @Override
                    public void onSuccess(DocumentReference documentReference) {
-                       //  Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                        Toast.makeText(CreateLog.this, "Log added successfully", Toast.LENGTH_LONG).show();
                        logName.getText().clear();
                    }

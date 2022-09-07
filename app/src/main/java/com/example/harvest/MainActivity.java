@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //firebase auth
+        mAuth = FirebaseAuth.getInstance();
+
+        //initialise UI elements and set onclick listeners
         register = (TextView) findViewById(R.id.register);
         register.setOnClickListener(this);
 
@@ -46,15 +50,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editTextLoginEmail = (EditText) findViewById(R.id.loginEmail);
         editTextLoginPassword = (EditText) findViewById(R.id.loginPassword);
 
-        mAuth = FirebaseAuth.getInstance();
-
         forgotPassword = (TextView) findViewById(R.id.forgotPassword);
         forgotPassword.setOnClickListener(this);
     }
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+        // Check if user is signed in (non-null) and update UI accordingly
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             startActivity(new Intent(MainActivity.this, ProfileActivity.class));
@@ -75,11 +77,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //method for verifying details of a user trying to sign in
     private void loginUser(){
         String email = editTextLoginEmail.getText().toString().trim();
         String password = editTextLoginPassword.getText().toString().trim();
 
-
+        //check that fields arent empty
         if (email.isEmpty()){
             editTextLoginEmail.setError("Email is a required field");
             editTextLoginEmail.requestFocus();
@@ -103,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             editTextLoginPassword.requestFocus();
             return;
         }
+
+        //firebase authentication
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
