@@ -27,7 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CreateAccount extends AppCompatActivity implements View.OnClickListener {
+public class CreateAccount extends AppCompatActivity {
 
     private static final String TAG = CreateAccount.class.getSimpleName();
 
@@ -58,16 +58,10 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         editTextUsername = (EditText) findViewById(R.id.username);
 
         registerUser = (TextView) findViewById(R.id.createAccount);
-        registerUser.setOnClickListener(this);
+        registerUser.setOnClickListener(view -> {
+            registerUser();
+        });
 
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch(view.getId()){
-            case R.id.createAccount:
-                registerUser();
-        }
     }
 
     private void registerUser() {
@@ -93,7 +87,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){//check that string is in email format
             editTextEmail.setError("Invalid email address");
             editTextEmail.requestFocus();
             return;
@@ -117,6 +111,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
             @Override
             public void onSuccess(AuthResult authResult) {
 
+                //create hashmap with details of new user
                 HashMap<String , Object> user = new HashMap<>();
                 user.put("fullName" , fullName);
                 user.put("email", email);
@@ -128,8 +123,8 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
-                              //  Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                                 Toast.makeText(CreateAccount.this, "Account created successfully. Please log in", Toast.LENGTH_LONG).show();
+                                FirebaseAuth.getInstance().signOut();
                                 Intent intent = new Intent(CreateAccount.this , MainActivity.class);
                                 startActivity(intent);
 

@@ -55,7 +55,7 @@ public class ForgotPassword extends AppCompatActivity {
             emailEditText.requestFocus();
             return;
         }
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){//check that string is in email format
             emailEditText.setError("Email invalid");
             emailEditText.requestFocus();
             return;

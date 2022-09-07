@@ -88,20 +88,20 @@ public class CreateLogEntry extends AppCompatActivity {
             return;
         }
 
+        //fetch time
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         String timeCreated = formatter.format(date);
 
-
+        //create log entry instance
         LogEntry entry = new LogEntry(FirebaseAuth.getInstance().getCurrentUser().getUid(),produce,weight,timeCreated);
         String ID = (usersRef.document(FirebaseAuth.getInstance().getCurrentUser().getUid())).getId();
 
-        //create log entry in firestore
+        //add log entry to firestore
         usersRef.document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Logs").document(ID).collection("Log Entries").add(entry)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        //  Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                         Toast.makeText(CreateLogEntry.this, "Log entry added successfully", Toast.LENGTH_LONG).show();
                         produceET.getText().clear();
                         weightET.getText().clear();

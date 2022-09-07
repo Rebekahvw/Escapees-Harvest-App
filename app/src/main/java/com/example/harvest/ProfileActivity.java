@@ -34,16 +34,12 @@ import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    //UI elements
     private Button logOut;
     private Button addLog;
-    private TextView logDisplayTextView;
-    //Create private variables for firebase user and for database reference, so that we reference which "table" we are modifying
-    private FirebaseUser user;
-    private DatabaseReference reference;
     private LinearLayout logLayout;
-    private String userID; //used in database; makes sure we select the right user
 
-    //Attempts to fetch and display logs using firestore
+    //firestore database, documents and collection
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference usersRef = db.collection("users");//what we wanna add nodes to
     private DocumentReference logRef = db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -60,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
+                FirebaseAuth.getInstance().signOut();//uses firebase auth to sign user out
                 startActivity(new Intent(ProfileActivity.this, MainActivity.class));
             }
         });

@@ -21,14 +21,13 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-
+    //UI elements
     private TextView register, login;
     private EditText editTextLoginEmail, editTextLoginPassword;
-   // private Button logIn;
-    private FirebaseAuth mAuth;
     private TextView forgotPassword;
 
-
+    //firebase authentication variable
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         forgotPassword.setOnClickListener(this);
     }
     @Override
-    public void onStart() {
+    public void onStart() {//display user's home page instead of login page if user is logged in
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    //method for verifying details of a user trying to sign in
+    //verify details of a user trying to log in
     private void loginUser(){
         String email = editTextLoginEmail.getText().toString().trim();
         String password = editTextLoginPassword.getText().toString().trim();
@@ -113,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
 
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();//fetch current user from firebase auth
 
                     if(user.isEmailVerified()){
                         //redirect to user profile
