@@ -12,4 +12,6 @@ Group members:
 
 [![Harvest](https://circleci.com/gh/Rebekahvw/Escapees-Harvest-App/tree/main.svg?style=shield)](https://app.circleci.com/pipelines/github/Rebekahvw/Escapees-Harvest-App)
 
+![example workflow](https://github.com/Rebekahvw/Escapees-Harvest-App/actions/workflows/androidci.yml/badge.svg)
+
 [![Coverage Status](https://coveralls.io/repos/github/Rebekahvw/Escapees-Harvest-App/badge.svg?branch=main)](https://coveralls.io/github/Rebekahvw/Escapees-Harvest-App?branch=main)
